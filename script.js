@@ -59,43 +59,38 @@ Humburger.mayonnaise = {
     calorie : 5
 };
 
-
-//Функция конструктор:
-
 function Humburger (size, stuffing) {
 
-    this.size = size;
-    this.stuffing = stuffing;
-    this.addingToppings = [];
-
+    var hamburger = {
+		size : size,
+		stuffing : stuffing,
+		addingToppings : [],
+		calories : size.calorie + stuffing.calorie,
+		price : size.cost + stuffing.cost
+    };
+    
     // Функция добавления добавок (масло масляное)) ) 
 
-    this.addTopping = function (addingTopping) {  
-        this.addingToppings.push(addingTopping);
+    this.addTopping = function (toping) {  
+        hamburger.addingToppings.push(toping);
     };
 
     //Функция подсчета каллорий:
 
     this.calculateCalories = function (){  
-
-        var calorie  = this.size.calorie + this.stuffing.calorie;
         
-        this.addingToppings.forEach (function (addTopping){
-            calorie += addTopping.calorie;
-        });
-        return calorie;
+        return hamburger.addingToppings.reduce( function (sum, addTopping){
+            return sum + addTopping.calorie;
+        }, hamburger.calories);
     };
 
     // Функция подсчета цены:
 
     this.calculatePrice = function (){
 
-        var cost = this.size.cost + this.stuffing.cost;
-
-        this.addingToppings.forEach (function(addTopping){
-            cost += addTopping.cost;
-        });
-        return cost;
+        return hamburger.addingToppings.reduce( function (sum, addTopping){
+            return sum + addTopping.cost;
+        }, hamburger.price);
     };
 };
 
